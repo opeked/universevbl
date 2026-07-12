@@ -1,1 +1,90 @@
-local BinaryEncrypted = table.concat({'01010000','01110101','01110100','00100000','01011001','01101111','01110101','01110010','00100000','01010011','01100011','01110010','01101001','01110000','01110100','00100000','01001000','01100101','01110010','01100101',}) function decode(str) local function binary_to_string(bin) return string.char(tonumber(bin, 2));end;return (str:gsub("(".. ("[01]"):rep(8) .. ")", binary_to_string));end;local Binary = BinaryEncrypted _G.EncodedBinary = decode(Binary);loadstring(_G.EncodedBinary)()
+-- Universe Store - Volleyball Legends
+
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Window = Rayfield:CreateWindow({
+    Name = "Universe Store - Volleyball Legends",
+    LoadingTitle = "Carregando...",
+    LoadingSubtitle = "Volleyball Legends",
+    ConfigurationSaving = {Enabled = true, FolderName = "UniverseStore", FileName = "Config"}
+})
+
+local MainTab = Window:CreateTab("⚡ Main", 4483362458)
+
+local SpinsEnabled = false
+local YenEnabled = false
+local HabilidadeEnabled = false
+
+local function RequestReward(arg)
+    pcall(function()
+        local Event = game:GetService("ReplicatedStorage")
+            .Packages._Index["sleitnick_knit@1.7.0"]
+            .knit.Services.SeasonService.RF.RequestRankedReward
+        Event:InvokeServer(arg)
+    end)
+end
+
+-- Toggle Lucky Spins (Normal)
+MainTab:CreateToggle({
+    Name = "Lucky Spins Infinitos",
+    CurrentValue = false,
+    Flag = "SpinsToggle",
+    Callback = function(Value)
+        SpinsEnabled = Value
+        if Value then
+            spawn(function()
+                while SpinsEnabled do
+                    RequestReward(1)
+                    wait(0.7)
+                end
+            end)
+        end
+    end
+})
+
+-- Toggle Yen
+MainTab:CreateToggle({
+    Name = "Yen Infinitos",
+    CurrentValue = false,
+    Flag = "YenToggle",
+    Callback = function(Value)
+        YenEnabled = Value
+        if Value then
+            spawn(function()
+                while YenEnabled do
+                    RequestReward(2)
+                    wait(0.7)
+                end
+            end)
+        end
+    end
+})
+
+-- Novo: Toggle Lucky Spin de Habilidade
+MainTab:CreateToggle({
+    Name = "Lucky Spin de Habilidade",
+    CurrentValue = false,
+    Flag = "HabilidadeToggle",
+    Callback = function(Value)
+        HabilidadeEnabled = Value
+        if Value then
+            spawn(function()
+                while HabilidadeEnabled do
+                    RequestReward(4)
+                    wait(0.7)
+                end
+            end)
+        end
+    end
+})
+
+MainTab:CreateParagraph({
+    Title = "⚠️ Aviso",
+    Content = "Use com moderação.\nDelays muito baixos podem causar kick ou ban."
+})
+
+Rayfield:Notify({
+    Title = "Script Carregado",
+    Content = "Universe Store carregado com sucesso.",
+    Duration = 6
+})
